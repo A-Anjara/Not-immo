@@ -1,0 +1,139 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block customcss %}
+<link rel="stylesheet" href="{% static 'main_app/css/partenaire.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+    .hero-section {
+        background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+        url("{% static 'main_app/partenaire/hero-1.jpg' %}") center / cover;
+        height: 300px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        text-align: center;
+        margin-bottom: 40px;
+    }
+</style>
+{% endblock %}
+{% block header %}
+{% include 'header.html' with partenaire="active" %}
+{% endblock %}
+{% block body %}
+
+<!-- Added hero section with background image and title -->
+<div class="hero-section">
+    <div class="hero-content">
+        <h1>Nos partenaires</h1>
+        <p>Découvrez nos professionnels de confiance pour vous accompagner</p>
+    </div>
+</div>
+
+<div class="container">
+    <!-- Added search and filter section -->
+    <div class="search-filter-section">
+        <div class="search-bar">
+            <i class="fas fa-search"></i>
+            <input type="text" id="searchInput" placeholder="Rechercher un partenaire par nom ou ville...">
+        </div>
+        <div class="filter-buttons">
+            <button class="filter-btn active" data-filter="all">Tous</button>
+            {% for fonction in fonctions %}
+            <button class="filter-btn" data-filter="{{fonction.label}}">{{fonction.label}}</button>
+            {% endfor %}
+        </div>
+    </div>
+
+
+    <!-- Tous les partenaires -->
+    <h2>Tous les partenaires</h2>
+    <div class="partners-grid" id="allPartners">
+
+        {% for partenaire in partenaires %}
+
+        <div class="partner-card" data-type="{{partenaire.fonction.label}}"
+            data-name="{{partenaire.nom}} {{partenaire.prenom}}" data-city="{{partenaire.adresse}}"
+            data-phone="{{partenaire.telephone}}" data-email="{{partenaire.email}}">
+            <div class="partner-header">
+                <div class="avatar" aria-hidden="true"></div>
+                <div>
+                    <h4>{{partenaire.nom}} {{partenaire.prenom}}</h4>
+                    <p class="partner-role">{{partenaire.fonction.label}}</p>
+                </div>
+            </div>
+            <p class="partner-details"><i class="fas fa-map-marker-alt"></i>{{partenaire.adresse}}
+            </p>
+            <p class="partner-details"><i class="fas fa-phone"></i> {{partenaire.telephone}}</p>
+            <div class="partner-definition">
+                <p><strong>{{partenaire.fonction.label}} : </strong>{{partenaire.fonction.description}}</p>
+            </div>
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+    <!-- Types de partenaires -->
+    <h2>Nos types de partenaires</h2>
+    <div class="type-grid">
+        {% for fonction in fonctions %}
+        <div class="type-card">
+            <h4>{{fonction.label}}</h4>
+            <p>{{fonction.description}}</p>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Pourquoi faire appel? -->
+    <div class="why-section">
+        <!-- Fixed image path to use placeholder -->
+        <img src="{% static 'main_app/partenaire/image 18.png' %}" alt="Pourquoi faire appel">
+        <div>
+            <h3>Pourquoi faire appel à nos partenaires ?</h3>
+            <ul>
+                <li>Expertise et conseils personnalisés</li>
+                <li>Sécurité juridique des transactions</li>
+                <li>Accompagnement dans les démarches administratives</li>
+                <li>Solutions adaptées à votre situation</li>
+            </ul>
+        </div>
+    </div>
+
+</div>
+
+
+
+
+
+<!-- Added JavaScript for search and filter functionality -->
+<script src="{% static 'main_app/js/partenaire.js' %}"></script>
+
+<!-- Modal for partner details -->
+<div class="modal-overlay" id="partnerModal">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+        <button class="close-btn" id="modalClose" aria-label="Fermer">&times;</button>
+        <div class="modal-header">
+            <div id="modalAvatar" class="avatar avatar-lg" aria-hidden="true"></div>
+            <div>
+                <h3 id="modalTitle">Nom partenaire</h3>
+                <p id="modalRole" class="partner-role">Rôle</p>
+            </div>
+        </div>
+        <div class="modal-body">
+            <div class="modal-row"><i class="fas fa-envelope"></i> <strong>Email:</strong> <a href="#"
+                    id="modalEmail">--</a></div>
+            <div class="modal-row"><i class="fas fa-phone"></i> <strong>Téléphone:</strong> <a href="#"
+                    id="modalPhone">--</a></div>
+            <div class="modal-row"><i class="fas fa-map-marker-alt"></i> <strong>Localisation:</strong> <span
+                    id="modalLocation">--</span></div>
+            <div class="modal-actions" style="margin-top:12px; display:flex; gap:10px;">
+                <a id="modalEmailBtn" class="contact-btn" href="#"><i class="fas fa-paper-plane"></i> Envoyer un
+                    email</a>
+                <a id="modalCallBtn" class="profile-btn" href="#"><i class="fas fa-phone"></i> Appeler</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

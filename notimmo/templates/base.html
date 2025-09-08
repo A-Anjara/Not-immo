@@ -1,0 +1,192 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Not'Immo</title>
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha512-DxV+EoADOkOygM4IR9yXP8Sb2qwgidEmeqAEmDKIOfPRQZOWbXCzLC6vjbZyy0vPisbH2SyW27+ddLVCN+OMzQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    {% block customcss %}
+    {% endblock %}
+</head>
+
+<body>
+
+
+
+
+    {% block header %}
+    {% include 'header.html' %}
+    {% endblock %}
+
+
+
+    {% block body %}
+    NOT'IMMO
+    {% endblock %}
+
+
+
+    <!--FOOTER-->
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <!-- Colonne 1: À propos et Réseaux Sociaux -->
+                <div>
+                    <div class="footer-logo-wrapper">
+                        <a href="#" class="footer-logo">
+                            <div class="footer-logo-text">
+                                <span class="footer-logo-not">Not'</span>
+                                <span class="footer-logo-immo">Immo</span>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="footer-social-links">
+                        <a href="#" class="footer-social-icon">
+                            <!-- Icône Facebook -->
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+                            </svg>
+                        </a>
+                        <a href="#" class="footer-social-icon">
+                            <!-- Icône Instagram -->
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                            </svg>
+                        </a>
+                        <a href="#" class="footer-social-icon">
+                            <!-- Icône LinkedIn -->
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path
+                                    d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z">
+                                </path>
+                                <rect x="2" y="9" width="4" height="12"></rect>
+                                <circle cx="4" cy="4" r="2"></circle>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                <!-- Colonne 2: Liens rapides -->
+                <div>
+                    <h3 class="footer-heading">
+                        Liens rapides
+                    </h3>
+                    <ul class="footer-links-list">
+                        <li>
+                            <a href="{% url 'main_app:acheter' %}" class="footer-link">
+                                Acheter
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{% url 'main_app:louer' %}" class="footer-link">
+                                Louer
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{% url 'main_app:conseil' %}" class="footer-link">
+                                Conseils et actualités
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{% url 'main_app:partenaire' %}" class="footer-link">
+                                Nos partenaires
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{% url 'main_app:contact' %}" class="footer-link">
+                                Contact
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- Colonne 3: Contact -->
+                <div>
+                    <h3 class="footer-heading">
+                        Contact
+                    </h3>
+                    <ul class="footer-contact-list">
+                        <li class="footer-contact-item">
+                            <!-- Icône Localisation -->
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                class="footer-contact-icon">
+                                <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path>
+                                <circle cx="12" cy="10" r="3"></circle>
+                            </svg>
+                            <span>123 Avenue des Champs-Élysées, 75008 Paris, France</span>
+                        </li>
+                        <li class="footer-contact-item">
+                            <!-- Icône Téléphone -->
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                class="footer-contact-icon">
+                                <path
+                                    d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z">
+                                </path>
+                            </svg>
+                            <span>+33 1 23 45 67 89</span>
+                        </li>
+                        <li class="footer-contact-item">
+                            <!-- Icône Email -->
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                class="footer-contact-icon">
+                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z">
+                                </path>
+                                <polyline points="22,6 12,13 2,6"></polyline>
+                            </svg>
+                            <span>contact@notimmo.fr</span>
+                        </li>
+                    </ul>
+                </div>
+                <!-- Colonne 4: Newsletter -->
+                <div>
+                    <h3 class="footer-heading">
+                        Newsletter
+                    </h3>
+                    <p class="footer-newsletter-text">
+                        Inscrivez-vous à notre newsletter pour recevoir nos dernières
+                        offres et actualités.
+                    </p>
+                    <form class="footer-newsletter-form">
+                        <div class="footer-form-group">
+                            <input type="email" placeholder="Votre email" class="footer-input" />
+                            <button type="submit" class="footer-signup-btn">
+                                S'inscrire
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <div class="footer-copyright-bottom">
+                    &copy; 2023 Not' Immo. Tous droits réservés.
+                </div>
+                <div class="footer-legal-links">
+                    <a href="#" class="footer-link">
+                        Mentions légales
+                    </a>
+                    <a href="#" class="footer-link">
+                        CGU
+                    </a>
+                    <a href="#" class="footer-link">
+                        Politique de confidentialité
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script src="{% static 'js/base.js' %}"></script>
+
+</body>
+
+</html>

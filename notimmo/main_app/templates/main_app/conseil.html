@@ -1,0 +1,205 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block customcss %}
+<link rel="stylesheet" href="{% static 'main_app/css/conseil.css' %}">
+{% endblock %}
+
+{% block header %}
+{% include 'header.html' with conseil='active' %}
+{% endblock %}
+
+{% block body %}
+
+<div class="sary">
+  <h1 class="title"
+    style="background: url('{% static 'main_app/conseil/hero-1.jpg' %}'); background-size: 100% 175%; background-position: bottom; width: auto;">
+    Conseils et actualités
+  </h1>
+</div>
+
+
+<div class="container">
+  <div class="search-filters">
+    <input type="search" oninput="filter()" id="search-filter" placeholder="Rechercher un article..."
+      aria-label="Recherche article" />
+    <button class="filter-btn active" type="button"
+      onclick="current_filter.classList.remove('active');current_filter = this;current_filter.classList.add('active');filter();" value="">Tous</button>
+    {% for type_article in type_articles %}
+    <button class="filter-btn" type="button"
+      onclick="current_filter.classList.remove('active');current_filter=this;current_filter.classList.add('active');filter();" value="{{type_article.label}}">{{type_article.label}}</button>
+    {% endfor %}
+  </div>
+
+  <!-- Section À la une -->
+  {% if articles.0 %}
+  <section class="featured-article" aria-label="Article à la une" id="featured-article">
+    <div class="featured-article-image">
+      <img class="image-test" src="{{articles.0.image.url}}" />
+    </div>
+    <div class="featured-content">
+      <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <span class="articleCategory">
+          {{articles.0.categorie.label}}
+        </span>
+      </div>
+
+      <h2 class="article-title">{{articles.0.titre}}</h2>
+      <p class="article-desc">{{articles.0.description}}</p>
+      <div class="article-bottom">
+        <div class="article-bottom-calendar">
+          <i class="fa-solid fa-calendar"></i>
+          <small class="articleDate">{{articles.0.upload_date}}</small>
+        </div>
+        <div class="article-read" onclick="openModal(this)">
+          <div href="#" aria-label="Lire l'article">Lire</div>
+          <i class="fa-solid fa-arrow-right fleche"></i>
+        </div>
+      </div>
+    </div>
+    <div class="articleText hidden">{{articles.0.text}}</div>
+    <div class="articleList hidden">{{articles.0.liste}}</div>
+  </section>
+  {% endif %}
+  <!-- ...existing code... -->
+
+
+
+  <!-- Section Tous les articles -->
+  <nav class="title-article">
+    <h2>Tous les article</h2>
+  </nav>
+
+  <section class="articles-grid" aria-label="Tous les articles">
+    {% for article in articles %}
+    <article class="article-card">
+      <div class="article-card-image">
+        <img src="{{article.image.url}}" />
+      </div>
+
+      <div class="article-content">
+        <div class="article-tag">
+          <i class="fa-solid fa-tag"></i>
+          <span class="articleCategory">
+            {{article.categorie.label}}
+          </span>
+        </div>
+        <h3 class="article-title">{{article.titre}}</h3>
+        <p class="article-desc">{{article.description}}</p>
+        <div class="article-bottom">
+          <div class="article-bottom-calendar">
+            <i class="fa-solid fa-calendar"></i>
+            <small class="articleDate">{{article.upload_date}}</small>
+          </div>
+          <div class="article-read" onclick="openModal(this)">
+            <div aria-label="Lire l'article">Lire</div>
+            <i class="fa-solid fa-arrow-right fleche"></i>
+          </div>
+        </div>
+      </div>
+      <div class="articleText hidden">{{article.text}}</div>
+      <div class="articleList hidden">{{article.liste}}</div>
+    </article>
+    {% endfor %}
+  </section>
+
+
+</div>
+
+
+
+<!-- ...existing code... -->
+<div id="article-modal" class="modal hidden">
+  <div class="modal-content">
+    <div class="modal-close" id="modal-close">&times;</div>
+    <div id="modal-article-content">
+    </div>
+  </div>
+</div>
+<!-- ...existing code... -->
+<script>
+  // Contenus d'exemple pour chaque article (à adapter selon tes besoins)
+
+  // Sélectionne tous les articles (hors placeholders vides)
+  const articleCards = document.querySelectorAll('.articles-grid .article-card:not([aria-hidden])');
+  const modal = document.getElementById('article-modal');
+  let modalContent = document.getElementById("modal-article-content");
+  let modalClose = document.getElementById('modal-close');
+
+  // Ferme le modal
+  modalClose.addEventListener('click', closeModal);
+  function closeModal() {
+    modal.classList.toggle("hidden");
+  }
+
+
+
+
+  function openModal(el) {
+    console.log(el);
+    let clickedArticle = el.parentElement.parentElement.parentElement;
+    let list = clickedArticle.querySelector('.articleList').innerText.split('|');
+    console.log(clickedArticle);
+    modalContent.innerHTML = `
+    <div class="modal-article-content-above">
+          <div class="modal-article-content-image">
+            <img src="${clickedArticle.querySelector('img').src}">
+          </div>
+          <div class="modal-article-metas">
+            <div class="modal-article-meta">
+              <span>Catégorie : </span>
+              <span>${clickedArticle.querySelector('.articleCategory').innerText}</span>
+            </div>
+            <div class="modal-article-meta">
+              <span>Date : </span>
+              <span>${clickedArticle.querySelector('.articleDate').innerText}</span>
+            </div>
+          </div>
+
+        </div>
+        <h2>${clickedArticle.querySelector('.article-title').innerText}</h2>
+        <p>${clickedArticle.querySelector('.articleText').innerText}</p>
+    `;
+
+    if (list[0]) {
+      let liste = "";
+      liste += "<ul>";
+      for (element of list) {
+        liste += `<li>${element}</li>`;
+      }
+      liste += "</ul>";
+      modalContent.innerHTML += liste;
+    }
+
+    modal.classList.toggle("hidden");
+
+  }
+
+
+
+  let cards = document.getElementsByClassName('article-card');
+  let current_filter = document.getElementsByClassName("filter-btn active")[0];
+  function filterArticle(value) {
+    for (card of cards) {
+      if (card.querySelector('.articleCategory').innerText.search(value) >= 0) {
+        card.classList.remove("hidden");
+      } else {
+        card.classList.add('hidden');
+      }
+    }
+  }
+
+  let search_filter = document.getElementById('search-filter');
+  function filter() {
+    for (card of cards) {
+      if (card.querySelector('.articleCategory').innerText.search(current_filter.getAttribute('value')) >= 0 && card.querySelector('.article-title').innerText.toLowerCase().search(search_filter.value.toLowerCase()) >= 0) {
+        card.classList.remove("hidden");
+      } else {
+        card.classList.add('hidden');
+      }
+    }
+  }
+</script>
+<!-- ...existing code... -->
+
+{% endblock %}
