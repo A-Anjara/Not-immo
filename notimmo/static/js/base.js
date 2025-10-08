@@ -53,7 +53,7 @@ function openPropertyDetails(propertyId) {
     area: propertyCard.dataset.area || "",
     type: propertyCard.dataset.type || "",
     amenities: (propertyCard.dataset.amenities || "")
-      .split(",")
+      .split("\n")
       .map((a) => a.trim())
       .filter(Boolean),
     description: propertyCard.dataset.description || "",
@@ -203,12 +203,26 @@ function updateCounter() {
 
 // Price formatter
 function formatPrice(price) {
-  return new Intl.NumberFormat("fr-FR", {
-    style: "currency",
-    currency: "EUR",
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 0,
-  }).format(price)
+  let result = "";
+  let c;
+  let count = 0;
+  while(price>0){
+    count += 1;
+    c = price % 10;
+    result = c.toString() + result;
+    price = parseInt(price / 10);
+    if(count % 3 == 0){
+      result = " " + result;
+    }
+  }
+  result += " Ar";
+  return result;
+  // return new Intl.NumberFormat("fr-FR", {
+  //   style: "currency",
+  //   currency: "EUR",
+  //   minimumFractionDigits: 0,
+  //   maximumFractionDigits: 0,
+  // }).format(price)
 }
 
 // Amenities renderer

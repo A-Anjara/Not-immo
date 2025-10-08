@@ -138,7 +138,7 @@
   function openModal(el) {
     console.log(el);
     let clickedArticle = el.parentElement.parentElement.parentElement;
-    let list = clickedArticle.querySelector('.articleList').innerText.split('|');
+    let list = clickedArticle.querySelector('.articleList').innerText.split('\n');
     console.log(clickedArticle);
     modalContent.innerHTML = `
     <div class="modal-article-content-above">

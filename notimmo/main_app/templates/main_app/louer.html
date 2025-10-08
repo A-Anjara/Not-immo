@@ -395,17 +395,17 @@
 
         bienContainer.style.display = 'none';
         loading.style.display = '';
-        console.log("CHANGED");
+        
 
 
         setTimeout(() => {
-            console.log("SHOWING");
+            
             bienContainer.style.display = '';
             loading.style.display = 'none';
         }, 600);
 
         setTimeout(() => {
-            console.log("SORTING");
+            
             to_use_biens.sort((a, b) => {
                 if (tri_sort.value == "1") {
                     return ((a.prix) - (b.prix));
@@ -424,9 +424,9 @@
         res = []
         for (x of obj) {
             if (!(res.includes(x[key]))) {
-                console.log(`${x[key]} still not in ${res}`)
+                
                 res.push(x[key])
-                console.log(res)
+                
 
             }
         }
@@ -446,31 +446,31 @@
         wait_render = setTimeout(() => {
             to_use_biens = biens.filter((bien) => {
                 if (recherche.value.length && !bien.localisation.toLowerCase().match(`${recherche.value.toLowerCase()}`)) {
-                    console.log("[" + bien.id + "] OUT!, there is no: '" + recherche.value + "' here");
+                    
                     return false;
                 }
                 if (type_de_bien.value.length && bien.type_de_bien.label != type_de_bien.value) {
-                    console.log("[" + bien.id + "] OUT!, It is not '" + type_de_bien.value + "'");
+                    
                     return false;
                 }
                 if (budget_max.value && bien.prix > Number(budget_max.value)) {
-                    console.log("[" + bien.id + "] OUT!, price over bidget of'" + budget_max.value + "'");
+                    
                     return false;
                 }
                 if (min_range.value && bien.prix < min_range.value) {
-                    console.log("[" + bien.id + "] OUT!, price lower than'" + min_range.value + "'");
+                    
                     return false;
                 }
                 if (max_range.value && bien.prix > max_range.value) {
-                    console.log("[" + bien.id + "] OUT!, price over '" + max_range.value + "'");
+                    
                     return false;
                 }
                 if (chambre.value && bien.chambre != Number(chambre.value)) {
-                    console.log("[" + bien.id + "] OUT!, room not '" + chambre.value + "'");
+                    
                     return false;
                 }
                 if (salle_de_bain.value && bien.salle_de_bain != Number(salle_de_bain.value)) {
-                    console.log("[" + bien.id + "] OUT!, bathroom not '" + salle_de_bain.value + "'");
+                    
                     return false;
                 }
                 if (bienId.includes(bien.id)) {
@@ -545,13 +545,13 @@
         let num = n.length;
         while (--a >= 0) {
             res = n[a] + res
-            console.log(a % 3)
+            
             if (a > 0 && a != num && ((num - a) % 3) == 0) {
-                console.log("Triggered")
+                
                 res = " " + res
             }
         }
-        console.log(res)
+        
 
         return res
     }
