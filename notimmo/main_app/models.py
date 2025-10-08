@@ -1,5 +1,7 @@
 from django.db import models
-
+from django.db.models.signals import post_delete
+from django.dispatch import receiver
+import os
 
 MONTH = "Janvier,Fevrier,Mars,Avril,Mai,Juin,Juillet,Août,Septembre,Octobre,Novembre,Décembre".split(",")
 
@@ -95,3 +97,13 @@ class Article(models.Model):
     
     def upload_date(self):
         return f"{self.date.day} {MONTH[self.date.month -1]} {self.date.year}"
+    
+
+
+@receiver(post_delete,sender=Article)
+def delete_article(sender,instance,**kwargs):
+    os.remove(instance.image.path)
+
+@receiver(post_delete,sender=Bien)
+def delete_article(sender,instance,**kwargs):
+    os.remove(instance.image.path)
