@@ -37,6 +37,7 @@ body {
 /* Header */
 .header {
   background: var(--white);
+  /* background-color: red; */
   border-bottom: 1px solid var(--border);
   position: sticky;
   top: 0;
@@ -54,6 +55,7 @@ body {
 
 .logo {
   flex-shrink: 0;
+
 }
 
 .logo-text {
