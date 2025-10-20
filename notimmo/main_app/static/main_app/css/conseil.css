@@ -1,5 +1,5 @@
 /* Section À la une (featured-article) responsive */
-.featured-article {
+/* .featured-article {
   background: #fff;
   display: flex;
   flex-direction: row;
@@ -10,17 +10,17 @@
   margin-bottom: 40px;
   align-items: center;
   padding: 24px;
-}
+} */
 
 
 
-.featured-content {
+/* .featured-content {
   flex: 1;
   display: flex;
   flex-direction: column;
   gap: 12px;
   padding-left: 10px;
-}
+} */
 
 
 /* Reset basique */
@@ -133,19 +133,20 @@ body {
   background: white;
   display: flex;
   overflow: hidden;
-  box-shadow: 0 0 12px rgb(0 0 0 / 0.1);
+  /* box-shadow: 1px 0 12px rgb(0,0,0); */
   margin-bottom: 40px;
   position: relative;
   justify-content: space-between;
-  align-items: flex-start;
+  align-items: center;
+  gap:16px;
 }
 
 .featured-article .fonts {
   /*SARY  */
   /* width: 90px;
-    height: auto;
-   object-fit: cover;
-   margin-bottom: 20px; */
+  height: auto;
+  object-fit: cover;
+  margin-bottom: 20px; */
   /* SORATRA */
   font-size: 14px;
   color: var(--color-1);
@@ -156,27 +157,41 @@ body {
 }
 
 .featured-article-image {
-  width: 40%;
-  height: 100%;
-  border-radius: 15px;
+  width: 150px;
+  height: 150px;
+  /* border:1px solid black; */
+  /* height: 100%; */
+  /* border-radius: 15px; */
   overflow: hidden;
+  /* padding-right: 24px;
+  border-right:1px solid rgba(25,25,25,0.7); */
+  
+  
 }
+@media screen and (max-width:492px){
+  .featured-article-image{
+    width:75px;
+    height: 75px;
+  }
+}
+
 
 .image-test {
   display: block;
   width: 100%;
-  height: 100%;
+  height:100%;
   object-fit: cover;
   object-position: center;
 
 }
 
 .featured-content {
-  width: 50%;
+  flex-grow: 1;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  border:1px solid black;
+  background-color: rgb(240,240,240);
+  padding:12px;
 }
 
 .tag {
@@ -299,7 +314,7 @@ body {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: bottom;
+  object-position: center;
 }
 
 .article-content {
@@ -342,7 +357,7 @@ body {
   font-size: 13px;
   color: #666;
   flex-grow: 1;
-  margin-top: 5%;
+  margin-top: 12px;
   margin-bottom: 12px;
   line-height: 1.3;
 }

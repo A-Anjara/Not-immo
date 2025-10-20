@@ -8,7 +8,9 @@
     <title>Not'Immo</title>
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha512-DxV+EoADOkOygM4IR9yXP8Sb2qwgidEmeqAEmDKIOfPRQZOWbXCzLC6vjbZyy0vPisbH2SyW27+ddLVCN+OMzQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css"
+        integrity="sha512-DxV+EoADOkOygM4IR9yXP8Sb2qwgidEmeqAEmDKIOfPRQZOWbXCzLC6vjbZyy0vPisbH2SyW27+ddLVCN+OMzQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     {% block customcss %}
     {% endblock %}
 </head>
@@ -38,6 +40,17 @@
                 <!-- Colonne 1: À propos et Réseaux Sociaux -->
                 <div>
                     <div class="footer-logo-wrapper">
+                        <div class="logo">
+                            <svg viewBox="0 0 329 404" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M41 403.5H1V302.5L215.5 135.5H219V403.5H130V276L41 325V403.5Z"
+                                    fill="currentcolor" />
+                                <path d="M328 202.5V403.5H238.5V135.5H240L328 202.5Z" fill="currentcolor" />
+                                <path d="M328 173L238 103.5V2L328 96V173Z" fill="currentcolor" />
+                                <path
+                                    d="M238 403.5H238.5M238.5 403.5H328V202.5L240 135.5H238.5V403.5ZM1 403.5H41V325L130 276V403.5H219V135.5H215.5L1 302.5V403.5ZM238 103.5L328 173V96L238 2V103.5Z"
+                                    stroke="currentcolor" />
+                            </svg>
+                        </div>
                         <a href="#" class="footer-logo">
                             <div class="footer-logo-text">
                                 <span class="footer-logo-not">Not'</span>
@@ -149,6 +162,7 @@
                     </ul>
                 </div>
                 <!-- Colonne 4: Newsletter -->
+                 <!--
                 <div>
                     <h3 class="footer-heading">
                         Newsletter
@@ -165,13 +179,13 @@
                             </button>
                         </div>
                     </form>
-                </div>
+                </div>-->
             </div>
             <div class="footer-bottom">
                 <div class="footer-copyright-bottom">
                     &copy; 2023 Not' Immo. Tous droits réservés.
                 </div>
-                <div class="footer-legal-links">
+               <!-- <div class="footer-legal-links">
                     <a href="#" class="footer-link">
                         Mentions légales
                     </a>
@@ -181,7 +195,7 @@
                     <a href="#" class="footer-link">
                         Politique de confidentialité
                     </a>
-                </div>
+                </div> -->
             </div>
         </div>
     </footer>
