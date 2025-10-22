@@ -185,31 +185,15 @@ body {
 }
 
 .mobile-menu {
-  position: fixed;
-  left: 0;
-  right: 0;
-  top: var(--header-height, 64px);
-  height: calc(100dvh - var(--header-height, 64px));
-  background: var(--white);
-  border-top: 1px solid var(--border);
-  padding: 1rem 1rem calc(1rem + env(safe-area-inset-bottom));
-  z-index: 95; /* le header est à 100 */
-  overflow-y: auto;
+  width:100%;
+  padding: 16px;
   -webkit-overflow-scrolling: touch;
-
-  /* Animation d’apparition */
-  opacity: 0;
-  transform: translateY(-8px);
-  visibility: hidden;
-  pointer-events: none;
-  transition: opacity .2s ease, transform .2s ease, visibility .2s ease;
+  /* pointer-events: none; */
+  display: none;
 }
 
 .mobile-menu.show {
-  opacity: 1;
-  transform: translateY(0);
-  visibility: visible;
-  pointer-events: auto;
+  display: block;
 }
 
 /* Améliore la lisibilité des liens dans le panneau */

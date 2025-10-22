@@ -55,11 +55,12 @@
 
         <div class="partner-card" data-type="{{partenaire.fonction.label}}"
             data-name="{{partenaire.nom}} {{partenaire.prenom}}" data-city="{{partenaire.adresse}}"
-            data-phone="{{partenaire.telephone}}" data-email="{{partenaire.email}}">
+            data-phone="{{partenaire.telephone}}" data-initials="{{partenaire.nom.0}}{{partenaire.prenom.0}}" data-email="{{partenaire.email}}" onclick="openModal(this)">
             <div class="partner-header">
                 <div class="avatar" aria-hidden="true"></div>
                 <div>
-                    <h4>{{partenaire.nom}} {{partenaire.prenom}}</h4>
+                    <h4>{{partenaire.nom}} {{partenaire.prenom}}
+                    </h4>
                     <p class="partner-role">{{partenaire.fonction.label}}</p>
                 </div>
             </div>
@@ -112,28 +113,6 @@
 
 <!-- Modal for partner details -->
 <div class="modal-overlay" id="partnerModal">
-    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-        <button class="close-btn" id="modalClose" aria-label="Fermer">&times;</button>
-        <div class="modal-header">
-            <div id="modalAvatar" class="avatar avatar-lg" aria-hidden="true"></div>
-            <div>
-                <h3 id="modalTitle">Nom partenaire</h3>
-                <p id="modalRole" class="partner-role">Rôle</p>
-            </div>
-        </div>
-        <div class="modal-body">
-            <div class="modal-row"><i class="fas fa-envelope"></i> <strong>Email:</strong> <a href="#"
-                    id="modalEmail">--</a></div>
-            <div class="modal-row"><i class="fas fa-phone"></i> <strong>Téléphone:</strong> <a href="#"
-                    id="modalPhone">--</a></div>
-            <div class="modal-row"><i class="fas fa-map-marker-alt"></i> <strong>Localisation:</strong> <span
-                    id="modalLocation">--</span></div>
-            <div class="modal-actions" style="margin-top:12px; display:flex; gap:10px;">
-                <a id="modalEmailBtn" class="contact-btn" href="#"><i class="fas fa-paper-plane"></i> Envoyer un
-                    email</a>
-                <a id="modalCallBtn" class="profile-btn" href="#"><i class="fas fa-phone"></i> Appeler</a>
-            </div>
-        </div>
-    </div>
+    
 </div>
 {% endblock %}

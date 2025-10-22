@@ -1,5 +1,7 @@
 // Search and filter functionality
+let modalContainer;
 document.addEventListener("DOMContentLoaded", () => {
+  modalContainer = document.getElementById("partnerModal");
   const searchInput = document.getElementById("searchInput")
   const filterButtons = document.querySelectorAll(".filter-btn")
   const partnerCards = document.querySelectorAll(".partner-card")
@@ -46,115 +48,42 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     })
   }
+
 })
 
-// Modal handling for partner cards
-document.addEventListener("DOMContentLoaded", () => {
-  const modalOverlay = document.getElementById("partnerModal")
-  const modalTitle = document.getElementById("modalTitle")
-  const modalRole = document.getElementById("modalRole")
-  const modalEmail = document.getElementById("modalEmail")
-  const modalPhone = document.getElementById("modalPhone")
-  const modalLocation = document.getElementById("modalLocation")
-  const modalAvatar = document.getElementById("modalAvatar")
-  const modalClose = document.getElementById("modalClose")
-  const modalEmailBtn = document.getElementById("modalEmailBtn")
-  const modalCallBtn = document.getElementById("modalCallBtn")
-  const partnerCards = document.querySelectorAll(".partner-card")
+function openModal(element){
+  
+  modalContainer.innerHTML = `
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+        <button class="close-btn" id="modalClose" aria-label="Fermer" onclick="modalContainer.classList.remove('active')">&times;</button>
+        <div class="modal-header">
+            <div id="modalAvatar" class="avatar avatar-lg" aria-hidden="true">
+            ${element.getAttribute('data-initials').toUpperCase()}
+            </div>
+            <div>
+                <h3 id="modalTitle">${element.getAttribute('data-name')}</h3>
+                <p id="modalRole" class="partner-role">${element.getAttribute('data-type')}</p>
+            </div>
+        </div>
+        <div class="modal-body">
+            <div class="modal-row"><i class="fas fa-envelope"></i> <strong>Email:</strong> <a href="#"
+                    id="modalEmail">${element.getAttribute('data-email')}</a></div>
+            <div class="modal-row"><i class="fas fa-phone"></i> <strong>Téléphone:</strong> <a href="#"
+                    id="modalPhone">${element.getAttribute('data-phone')}</a></div>
+            <div class="modal-row"><i class="fas fa-map-marker-alt"></i> <strong>Localisation:</strong> <span
+                    id="modalLocation">${element.getAttribute('data-city')}</span></div>
+            <div class="modal-actions" style="margin-top:12px; display:flex; gap:10px;">
+                <a id="modalEmailBtn" class="contact-btn" href="mailto:${element.getAttribute('data-email')}}"><i class="fas fa-paper-plane"></i> Envoyer un
+                    email</a>
+                <a id="modalCallBtn" class="profile-btn" href="tel:${element.getAttribute('data-phone').replace(/\s+/,'')}"><i class="fas fa-phone"></i> Appeler</a>
+            </div>
+        </div>
+    </div>
+  
+  `;
 
-  function openModal(data) {
-    modalTitle.textContent = data.name || "--"
-    modalRole.textContent = data.role || "--"
 
-    // Email link
-    if (data.email) {
-      modalEmail.textContent = data.email
-      modalEmail.href = `mailto:${data.email}`
-      if (modalEmailBtn) modalEmailBtn.href = `mailto:${data.email}`
-    } else {
-      modalEmail.textContent = "--"
-      modalEmail.removeAttribute('href')
-      if (modalEmailBtn) modalEmailBtn.href = '#'
-    }
+  modalContainer.classList.add('active');
 
-    // Phone link
-    if (data.phone) {
-      modalPhone.textContent = data.phone
-      modalPhone.href = `tel:${data.phone.replace(/\s+/g, '')}`
-      if (modalCallBtn) modalCallBtn.href = `tel:${data.phone.replace(/\s+/g, '')}`
-    } else {
-      modalPhone.textContent = "--"
-      modalPhone.removeAttribute('href')
-      if (modalCallBtn) modalCallBtn.href = '#'
-    }
+}
 
-    modalLocation.textContent = data.city || "--"
-
-    // Avatar: show initials
-    if (modalAvatar) {
-      const initials = (data.initials || (data.name || '').split(' ').map(n=>n[0]).filter(Boolean).slice(0,2).join('')).toUpperCase()
-      modalAvatar.textContent = initials || '--'
-    }
-
-    modalOverlay.classList.add("active")
-  }
-
-  function closeModal() {
-    modalOverlay.classList.remove("active")
-  }
-
-  partnerCards.forEach((card) => {
-    // populate avatar initials in card
-    const nameForAvatar = card.getAttribute('data-name') || ''
-    const avatarEl = card.querySelector('.avatar')
-    if (avatarEl) {
-      const initials = nameForAvatar.split(' ').map(n=>n[0]).filter(Boolean).slice(0,2).join('').toUpperCase()
-      avatarEl.textContent = initials
-    }
-
-    card.addEventListener("click", (e) => {
-      // Avoid triggering when clicking action buttons inside card
-  if (e.target.closest("button")) return
-
-      const data = {
-        name: card.getAttribute("data-name"),
-        email: card.getAttribute("data-email"),
-        phone: card.getAttribute("data-phone"),
-        city: card.getAttribute("data-city"),
-        role: card.querySelector(".partner-role") ? card.querySelector(".partner-role").textContent : card.getAttribute("data-type"),
-        initials: nameForAvatar.split(' ').map(n=>n[0]).filter(Boolean).slice(0,2).join('').toUpperCase()
-      }
-
-      openModal(data)
-    })
-
-  // If user clicks explicit "Voir le profil" button, open the modal too
-    const profileBtn = card.querySelector('.profile-btn')
-    if (profileBtn) {
-      profileBtn.addEventListener('click', (ev) => {
-        ev.stopPropagation()
-        const data = {
-          name: card.getAttribute("data-name"),
-          email: card.getAttribute("data-email"),
-          phone: card.getAttribute("data-phone"),
-          city: card.getAttribute("data-city"),
-          role: card.querySelector(".partner-role") ? card.querySelector(".partner-role").textContent : card.getAttribute("data-type"),
-      initials: nameForAvatar.split(' ').map(n=>n[0]).filter(Boolean).slice(0,2).join('').toUpperCase()
-        }
-        openModal(data)
-      })
-    }
-  })
-
-  modalClose.addEventListener("click", closeModal)
-
-  modalOverlay.addEventListener("click", (e) => {
-    if (e.target === modalOverlay) closeModal()
-  })
-
-  document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape" && modalOverlay.classList.contains("active")) {
-      closeModal()
-    }
-  })
-})

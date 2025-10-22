@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-^-3s)%2!ryxm^$8sl6kx(-9ox_3@d*_ivp^1kj)_(7v5xgzn%*'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 
@@ -127,11 +127,11 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media_files')
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_USE_TLS = True
-EMAIL_USE_SSL = False
-EMAIL_PORT = 587
-EMAIL_HOST_USER = 'andriamihajamananaanjara@gmail.com'
-EMAIL_HOST_PASSWORD = 'tavk typm ypyo jdiy '
+EMAIL_HOST = 'mail.notimmo.mg'
+EMAIL_USE_TLS = False
+EMAIL_USE_SSL = True
+EMAIL_PORT = 465
+EMAIL_HOST_USER = 'admin@notimmo.mg'
+EMAIL_HOST_PASSWORD = 'notimmo@admin'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

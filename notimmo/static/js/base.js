@@ -127,7 +127,7 @@ function populateModal(data) {
   const modalOwnerPhone = document.getElementById("modalOwnerPhone")
   const modalOwnerEmail = document.getElementById("modalOwnerEmail")
 
-  modalImage.src = galleryImages[0] || "/placeholder.svg?height=600&width=960"
+  modalImage.src = galleryImages[0];
   modalImage.alt = data.title
   modalBadge.textContent = data.type || "Bien"
   modalTitle.textContent = data.title
@@ -217,16 +217,11 @@ function formatPrice(price) {
   }
   result += " Ar";
   return result;
-  // return new Intl.NumberFormat("fr-FR", {
-  //   style: "currency",
-  //   currency: "EUR",
-  //   minimumFractionDigits: 0,
-  //   maximumFractionDigits: 0,
-  // }).format(price)
 }
 
 // Amenities renderer
 function renderAmenities(list) {
+  
   const wrap = document.getElementById("modalAmenities")
   wrap.innerHTML = ""
   const items = (list && list.length ? list : []).slice(0, 12)
@@ -456,5 +451,4 @@ document.addEventListener("DOMContentLoaded", () => {
     })
   })
 
-  console.log("NOT'IMMO modal prêt avec design premium ✨")
 })
