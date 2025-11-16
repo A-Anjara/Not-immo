@@ -45,7 +45,6 @@ class Notaire(models.Model):
 
 class Bien(models.Model):
     titre = models.CharField(max_length=75,null=False)
-    image = models.ImageField(upload_to=path_to,null=False)
     type_de_bien = models.ForeignKey(TypeBien,on_delete=models.PROTECT,null=False)
     chambre = models.SmallIntegerField(null=False)
     salle_de_bain = models.SmallIntegerField(null=False)
@@ -56,13 +55,52 @@ class Bien(models.Model):
     atout = models.TextField(null=False)
     notaire = models.ForeignKey(Notaire,on_delete=models.PROTECT,null = False)
     type_de_vente = models.CharField(max_length=15,choices={"Acheter":"Acheter","Louer":"Louer"})
+    image_1 = models.ImageField(upload_to=path_to,null=False)
+    image_2 = models.ImageField(upload_to=path_to,null=True,blank=True)
+    image_3 = models.ImageField(upload_to=path_to,null=True,blank=True)
+    image_4 = models.ImageField(upload_to=path_to,null=True,blank=True)
+    image_5 = models.ImageField(upload_to=path_to,null=True,blank=True)
+    image_6 = models.ImageField(upload_to=path_to,null=True,blank=True)
+    image_7 = models.ImageField(upload_to=path_to,null=True,blank=True)
+    image_8 = models.ImageField(upload_to=path_to,null=True,blank=True)
+    image_9 = models.ImageField(upload_to=path_to,null=True,blank=True)
+    image_10 = models.ImageField(upload_to=path_to,null=True,blank=True)
+    
+    
+    def get_images(self):
+        images = [self.image_1]
+        if(self.image_2):
+            images.append(self.image_2)
+        if(self.image_3):
+            images.append(self.image_3)
+        if(self.image_4):
+            images.append(self.image_4)
+        if(self.image_5):
+            images.append(self.image_5)
+        if(self.image_6):
+            images.append(self.image_6)
+        if(self.image_7):
+            images.append(self.image_7)
+        if(self.image_8):
+            images.append(self.image_8)
+        if(self.image_9):
+            images.append(self.image_9)
+        if(self.image_10):
+            images.append(self.image_10)
+        return images
+
 
 
     def __str__(self):
         return self.titre
     
     def serialize(self):
-        return {'id':self.id,'titre':self.titre,'image':self.image.url,'type_de_bien':self.type_de_bien.serialize(),'chambre':self.chambre,
+        
+        images = self.get_images()
+        images_url = []
+        for image in images:
+            images_url.append(image.url)
+        return {'id':self.id,'titre':self.titre,'images':images_url,'type_de_bien':self.type_de_bien.serialize(),'chambre':self.chambre,
                 'salle_de_bain':self.salle_de_bain,'surface':self.surface,'prix':self.prix,
                 'localisation':self.localisation,'description':self.description,'atout':self.atout,
                 'notaire':self.notaire.serialize(),'type_de_vente':self.type_de_vente
@@ -88,8 +126,9 @@ class Article(models.Model):
     text = models.TextField(null=False)
     date = models.DateTimeField(auto_now_add=True)
     liste = models.TextField(null=True)
-    image = models.ImageField(upload_to=path_article_to,null=False)
     categorie = models.ForeignKey(TypeArticle,on_delete=models.PROTECT)
+    image = models.ImageField(upload_to=path_article_to,null=False)
+    
 
 
     def __str__(self):
@@ -97,6 +136,9 @@ class Article(models.Model):
     
     def upload_date(self):
         return f"{self.date.day} {MONTH[self.date.month -1]} {self.date.year}"
+    
+    
+        
     
 
 
@@ -106,4 +148,6 @@ def delete_article(sender,instance,**kwargs):
 
 @receiver(post_delete,sender=Bien)
 def delete_article(sender,instance,**kwargs):
-    os.remove(instance.image.path)
+    images = instance.get_images()
+    for image in images:
+        os.remove(image.path)

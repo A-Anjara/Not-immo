@@ -156,6 +156,7 @@
     let bienContainer = document.getElementById("propertiesGrid");
 
     let biens = {{ biens| safe}};
+
     let to_use_biens = [...biens];
     let bienId = [];
     let recherche = document.getElementById("recherche");
@@ -361,16 +362,17 @@
             else {
                 let element = document.createElement('div')
 
+
                 element.innerHTML += `
             <div class="property-card" onclick="openModal(this)" data-id="${obj.id}"
                 data-title="${obj.titre}" data-location="${obj.localisation}" data-price="${obj.prix}"
                 data-bedrooms="${obj.chambre}" data-bathrooms="${obj.salle_de_bain}" data-area="${obj.surface}" data-type="${obj.type_de_bien.label}"
                 data-amenities="${obj.atout}"
-                data-images="${obj.image}"
+                data-images="${obj.images.join(',')}"
                 data-description="${obj.description}"
                 data-owner="${obj.notaire.nom} ${obj.notaire.prenom}" data-owner-phone="${obj.notaire.telephone}" data-owner-email="${obj.notaire.email}">
                 <div class="property-image">
-                    <img src="${obj.image}" alt="${obj.titre}" />
+                    <img src="${obj.images[0]}" alt="${obj.titre}" />
                     <div class="property-badge">${obj.type_de_bien.label}</div>
                 </div>
                 <div class="property-content">
@@ -412,7 +414,17 @@
 
     let modalContainer = document.getElementById("propertyModal");
     function openModal(element) {
-            modalContainer.innerHTML = `
+        let images = element.getAttribute('data-images').split(',')
+        let images_html = ""
+        for(let i=0;i<images.length;i++){
+            images_html += `
+            <div class="modal-image-container">
+                <img src="${images[i]}" image-id="${i}" alt="" onclick="changeImage(this)"/>
+            </div>
+            `
+            
+        }
+        modalContainer.innerHTML = `
             <div class="modal-content" >
             <button class="modal-close" aria-label="Fermer" onclick="modalContainer.classList.remove('show')">
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -424,10 +436,16 @@
             <div class="modal-body">
                 <div class="modal-gallery">
                     <div class="gallery-main">
-                        <img id="modalImage" src="${element.getAttribute('data-images')}" alt="" />
+                        <img id="modalImage" src="${images[0]}" alt="" />
 
                         <div class="modal-badge" id="modalBadge">${element.getAttribute('data-type')}</div>
 
+                    </div>
+                    <div id="gallery-images-container">
+                    <div id="gallery-images">
+                    ${images_html}
+                        
+                    </div>
                     </div>
 
                 </div>
@@ -488,7 +506,7 @@
                         <h3>Description</h3>
                         <p id="modalDescriptionText">${element.getAttribute('data-description')}</p>
                     </div>
-
+                    <!--
                     <div class="modal-owner">
                         <h3>Propriétaire</h3>
                         <div class="owner-card">
@@ -526,11 +544,18 @@
                     </div>
 
                 </div>
+                -->
             </div>
         </div>
             `;
 
         modalContainer.classList.add('show');
+    }
+
+    function changeImage(e){
+        let image_change = modalContainer.querySelector("#modalImage");
+        image_change.src = e.src;
+
     }
 
 

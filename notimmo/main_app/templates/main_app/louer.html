@@ -146,7 +146,7 @@
 </div>
 
 
-<div class="modal-overlay" id="propertyModal" aria-hidden="true" onclick="closePropertyDetails()">
+<div class="modal-overlay" id="propertyModal" >
     
 
 </div>
@@ -155,6 +155,7 @@
     let bienContainer = document.getElementById("propertiesGrid");
 
     let biens = {{ biens| safe}};
+
     let to_use_biens = [...biens];
     let bienId = [];
     let recherche = document.getElementById("recherche");
@@ -250,17 +251,15 @@
 
         bienContainer.style.display = 'none';
         loading.style.display = '';
-        
-
 
         setTimeout(() => {
-            
+
             bienContainer.style.display = '';
             loading.style.display = 'none';
         }, 600);
 
         setTimeout(() => {
-            
+
             to_use_biens.sort((a, b) => {
                 if (tri_sort.value == "1") {
                     return ((a.prix) - (b.prix));
@@ -279,9 +278,9 @@
         res = []
         for (x of obj) {
             if (!(res.includes(x[key]))) {
-                
+
                 res.push(x[key])
-                
+
 
             }
         }
@@ -301,31 +300,31 @@
         wait_render = setTimeout(() => {
             to_use_biens = biens.filter((bien) => {
                 if (recherche.value.length && !bien.localisation.toLowerCase().match(`${recherche.value.toLowerCase()}`)) {
-                    
+
                     return false;
                 }
                 if (type_de_bien.value.length && bien.type_de_bien.label != type_de_bien.value) {
-                    
+
                     return false;
                 }
                 if (budget_max.value && bien.prix > Number(budget_max.value)) {
-                    
+
                     return false;
                 }
                 if (min_range.value && bien.prix < min_range.value) {
-                    
+
                     return false;
                 }
                 if (max_range.value && bien.prix > max_range.value) {
-                    
+
                     return false;
                 }
                 if (chambre.value && bien.chambre != Number(chambre.value)) {
-                    
+
                     return false;
                 }
                 if (salle_de_bain.value && bien.salle_de_bain != Number(salle_de_bain.value)) {
-                    
+
                     return false;
                 }
                 if (bienId.includes(bien.id)) {
@@ -362,16 +361,17 @@
             else {
                 let element = document.createElement('div')
 
+
                 element.innerHTML += `
             <div class="property-card" onclick="openModal(this)" data-id="${obj.id}"
                 data-title="${obj.titre}" data-location="${obj.localisation}" data-price="${obj.prix}"
                 data-bedrooms="${obj.chambre}" data-bathrooms="${obj.salle_de_bain}" data-area="${obj.surface}" data-type="${obj.type_de_bien.label}"
                 data-amenities="${obj.atout}"
-                data-images="${obj.image}"
+                data-images="${obj.images.join(',')}"
                 data-description="${obj.description}"
                 data-owner="${obj.notaire.nom} ${obj.notaire.prenom}" data-owner-phone="${obj.notaire.telephone}" data-owner-email="${obj.notaire.email}">
                 <div class="property-image">
-                    <img src="${obj.image}" alt="${obj.titre}" />
+                    <img src="${obj.images[0]}" alt="${obj.titre}" />
                     <div class="property-badge">${obj.type_de_bien.label}</div>
                 </div>
                 <div class="property-content">
@@ -400,22 +400,30 @@
         let num = n.length;
         while (--a >= 0) {
             res = n[a] + res
-            
+
             if (a > 0 && a != num && ((num - a) % 3) == 0) {
-                
+
                 res = " " + res
             }
         }
-        
+
 
         return res
     }
 
-
-
     let modalContainer = document.getElementById("propertyModal");
     function openModal(element) {
-            modalContainer.innerHTML = `
+        let images = element.getAttribute('data-images').split(',')
+        let images_html = ""
+        for(let i=0;i<images.length;i++){
+            images_html += `
+            <div class="modal-image-container">
+                <img src="${images[i]}" image-id="${i}" alt="" onclick="changeImage(this)"/>
+            </div>
+            `
+            
+        }
+        modalContainer.innerHTML = `
             <div class="modal-content" >
             <button class="modal-close" aria-label="Fermer" onclick="modalContainer.classList.remove('show')">
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -427,10 +435,16 @@
             <div class="modal-body">
                 <div class="modal-gallery">
                     <div class="gallery-main">
-                        <img id="modalImage" src="${element.getAttribute('data-images')}" alt="" />
+                        <img id="modalImage" src="${images[0]}" alt="" />
 
                         <div class="modal-badge" id="modalBadge">${element.getAttribute('data-type')}</div>
 
+                    </div>
+                    <div id="gallery-images-container">
+                    <div id="gallery-images">
+                    ${images_html}
+                        
+                    </div>
                     </div>
 
                 </div>
@@ -491,7 +505,7 @@
                         <h3>Description</h3>
                         <p id="modalDescriptionText">${element.getAttribute('data-description')}</p>
                     </div>
-
+                    
                     <div class="modal-owner">
                         <h3>Propriétaire</h3>
                         <div class="owner-card">
@@ -529,11 +543,20 @@
                     </div>
 
                 </div>
+                
             </div>
         </div>
             `;
 
         modalContainer.classList.add('show');
+    }
+
+    function changeImage(e){
+
+        console.log('Inside here!');
+        let image_change = modalContainer.querySelector("#modalImage");
+        image_change.src = e.src;
+
     }
 
 
@@ -557,8 +580,8 @@
 
     document.addEventListener('DOMContentLoaded', () => {
         render();
-    })
-
+        // modalContainer.classList.add('show');
+    });
 
 </script>
 {% endblock %}

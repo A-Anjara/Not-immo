@@ -512,6 +512,33 @@
 .gallery-thumb.active {
   outline: 2px solid var(--accent);
 }
+#gallery-images-container{
+  max-width: 100%;
+  overflow-x: scroll;
+}
+#gallery-images{
+  display:flex;
+  width: max-content;
+  overflow-x:scroll;
+  padding: 12px;
+  gap:12px;
+
+}
+.modal-image-container{
+  width:80px;
+  height: 80px;
+  overflow: hidden;
+}
+.modal-image-container:hover{
+  cursor: pointer;
+  border-radius: 16px;
+  
+}
+.modal-image-container img{
+  width:100%;
+  height: 100%;
+  object-fit: cover;
+}
 
 .modal-info {
   padding: 1.5rem 1.5rem 0;
